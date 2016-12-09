@@ -1,0 +1,28 @@
+{
+  "name": "express-mw-bunyan",
+  "version": "0.0.0",
+  "description": "express middleware to use bunyan as a logger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaquimserafim/express-mw-bunyan.git"
+  },
+  "keywords": [
+    "express",
+    "log",
+    "logger",
+    "bunyan",
+    "services",
+    "apis",
+    "middleware"
+  ],
+  "author": "@JoaquimSerafim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaquimserafim/express-mw-bunyan/issues"
+  },
+  "homepage": "https://github.com/joaquimserafim/express-mw-bunyan#readme"
+}
