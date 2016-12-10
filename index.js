@@ -11,7 +11,7 @@ const setProp = require('set-prop-get-value')
 module.exports = Logger
 
 function Logger (bunyan) {
-  let counter = 1000000
+  let counter = 10000000
 
   return logRequest
 
@@ -39,14 +39,13 @@ function Logger (bunyan) {
 
     req.log.info({req: req, payload: req.body}, 'start of the request')
 
-    res.on('finish', (hadError) => {
+    res.on('finish', () => {
       const endTime = process.hrtime(startTime)
 
       req.log.info(
         {
           res: res,
-          duration: endTime[0] * 1e3 + endTime[1] * 1e-6,
-          hadError: hadError
+          duration: endTime[0] * 1e3 + endTime[1] * 1e-6
         },
         'end of the response'
       )
