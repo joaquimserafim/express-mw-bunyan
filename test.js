@@ -126,7 +126,7 @@ describe('express-mw-bunyan', () => {
     })
   })
 
-  describe('testing `req.log`', () => {
+  describe('testing `req.log interface`', () => {
 
     it('should be successful', (done) => {
       app = express()

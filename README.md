@@ -4,7 +4,7 @@ express middleware that implements bunyan as a logger
 
 <a href="https://nodei.co/npm/express-mw-bunyan/"><img src="https://nodei.co/npm/express-mw-bunyan.png?downloads=true"></a>
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square)](https://travis-ci.org/joaquimserafim/express-mw-bunyan)![Code Coverage 100%](https://img.shields.io/badge/code%20coverage-100%25-green.svg?style=flat-square)[![ISC License](https://img.shields.io/badge/license-ISC-blue.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/LICENSE)[![NodeJS](https://img.shields.io/badge/node-6.1.x-brightgreen.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/package.json#L1)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square)](https://travis-ci.org/joaquimserafim/express-mw-bunyan)![Code Coverage 100%](https://img.shields.io/badge/code%20coverage-100%25-green.svg?style=flat-square)[![ISC License](https://img.shields.io/badge/license-ISC-blue.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/LICENSE)[![NodeJS](https://img.shields.io/badge/node-6.1.x-brightgreen.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/package.json#L48)
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
@@ -32,7 +32,7 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(logger(bunyan.createLogger({name: 'test'})))
 
-// now `req.log` can be used with all log methods from bunyan
+// `req.log` will be exposed with all log methods from bunyan
 
 app.get('/', (req, res) => {
   req.log.info('getting Hello World')
