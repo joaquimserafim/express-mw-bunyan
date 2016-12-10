@@ -54,7 +54,7 @@ example of the initial request
   "hostname": "m-quim.local",
   "pid": 2695,
   "origin": "request",
-  "id": "1481376176639:127.0.0.1:2695:iwj94lbz:10000002",// REQUEST ID
+  "id": "825efe65-a27d-4dca-936b-e74249095fb7",// REQUEST ID
   "level": 30,
   "req": {
     "method": "POST",
@@ -86,7 +86,7 @@ example of the end reponse
   "hostname": "m-quim.local",
   "pid": 2695,
   "origin": "request",
-  "id": "1481376176639:127.0.0.1:2695:iwj94lbz:10000002",// REQUEST ID
+  "id": "825efe65-a27d-4dca-936b-e74249095fb7",// REQUEST ID
   "level": 30,
   "res": {
     "statusCode": 201,
