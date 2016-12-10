@@ -32,7 +32,7 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(logger(bunyan.createLogger({name: 'test'})))
 
-// inside of the route will expose `req.log` with all log methods from bunyan
+// now `req.log` can be used with all log methods from bunyan
 
 app.get('/', (req, res) => {
   req.log.info('getting Hello World')
