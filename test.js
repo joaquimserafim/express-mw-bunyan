@@ -9,6 +9,7 @@ max-len: ["error", 80]
 const express       = require('express')
 const request       = require('supertest')
 const setRequestId  = require('express-mw-correlation-id')
+const bodyParser    = require('body-parser')
 const bunyan        = require('bunyan')
 const mocha         = require('mocha')
 const expect        = require('chai').expect
@@ -48,10 +49,15 @@ describe('express-mw-bunyan', () => {
     before((done) => {
       app = express()
 
+      app.use(bodyParser.json())
       app.use(logger(bunyan.createLogger({name: 'test'})))
 
       app.get('/', (req, res) => {
         res.send('Hello World')
+      })
+
+      app.post('/', (req, res) => {
+        res.status(201).send()
       })
 
       done()
@@ -59,7 +65,7 @@ describe('express-mw-bunyan', () => {
 
     it('should be successful', (done) => {
       request(app)
-        .get('/')
+        .get('/?hey=yay')
         .end((err, res) => {
           expect(err).to.be.a('null')
           expect(res).to.be.an('object')
@@ -69,11 +75,28 @@ describe('express-mw-bunyan', () => {
           expect(captureStderr).to.be.undefined
           done()
         })
+    })
 
+    it('should be successful with body', (done) => {
+      request(app)
+        .post('/')
+        .send({a: 1})
+        .end((err, res) => {
+          expect(err).to.be.a('null')
+          expect(res).to.be.an('object')
+          expect(res.statusCode).to.be.equal(201)
+          expect(captureStdout).to.be.string
+          expect(JSON.parse(captureStdout).id)
+            .to.be.equal(res.headers['x-request-id'])
+          expect(JSON.parse(captureStdout).payload)
+            .to.be.deep.equal({a: 1})
+          expect(captureStderr).to.be.undefined
+          done()
+        })
     })
   })
 
-  describe('using a middleware to generate x-request-id / id', () => {
+  describe('using a middleware to generate the x-request-id/id', () => {
 
     before((done) => {
       app = express()
