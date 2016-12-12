@@ -28,6 +28,8 @@ const setRequestId = require('express-mw-correlation-id')
 // to capture the body/payload
 const bodyParser = require('body-parser')
 
+const logger = require('express-mw-bunyan')
+
 // middlewares
 app.use(bodyParser.json())
 app.use(logger(bunyan.createLogger({name: 'test'})))
