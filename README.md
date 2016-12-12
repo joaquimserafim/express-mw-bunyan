@@ -28,10 +28,13 @@ const setRequestId = require('express-mw-correlation-id')
 // to capture the body/payload
 const bodyParser = require('body-parser')
 
+
+
 const logger = require('express-mw-bunyan')
 
 // middlewares
 app.use(bodyParser.json())
+app.use(setRequestId())
 app.use(logger(bunyan.createLogger({name: 'test'})))
 
 // `req.log` will be exposed with all log methods from bunyan
