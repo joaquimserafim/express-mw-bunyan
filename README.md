@@ -1,6 +1,6 @@
 # express-mw-bunyan
 
-express middleware that implements bunyan as a logger
+express middleware that implements bunyan as a logger to be used with `req.log`
 
 <a href="https://nodei.co/npm/express-mw-bunyan/"><img src="https://nodei.co/npm/express-mw-bunyan.png?downloads=true"></a>
 
@@ -12,8 +12,16 @@ express middleware that implements bunyan as a logger
 ### api
 `const logger = require('express-mw-bunyan')`
 
-`app.use(logger(bunyan.createLogger({name: 'api_name'})))`
+```js
+app.use(
+  logger(bunyan.createLogger({name: 'api_name'})),
+  requestHeaderName = 'X-Request-ID'
+)
+```
 
+for more options to configure `bunyan.createLogger` check with [bunyan](https://github.com/trentm/node-bunyan#introduction)
+
+**Note:** should use a middleware like `express-mw-correlation-id` to generate the `req.id` if not `express-mw-bunyan` will generate the `req.id` itself by using `uuid.v4`
 
 ### example
 

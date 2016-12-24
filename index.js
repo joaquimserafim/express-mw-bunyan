@@ -7,27 +7,18 @@ max-len: ["error", 80]
 'use strict'
 
 const setProp = require('set-prop-get-value')
+const uuidV4 = require('uuid.v4')
 
 module.exports = Logger
 
-function Logger (bunyan) {
-  let counter = 10000000
+function Logger (bunyan, headerName = 'X-Request-ID') {
 
   return logRequest
 
   function logRequest (req, res, next) {
     const startTime = process.hrtime()
 
-    counter++
-
-    req.id || res.setHeader(
-        'X-Request-ID',
-        setProp(
-          req,
-          'id',
-          uuid(req.hostname, process.pid, new Date().valueOf(), counter)
-        )
-      )
+    req.id || res.setHeader(headerName, setProp(req, 'id', uuidV4()))
 
     req.log = bunyan.child(
       {
@@ -39,7 +30,11 @@ function Logger (bunyan) {
 
     req.log.info({req: req, payload: req.body}, 'start of the request')
 
-    res.on('finish', () => {
+    res.on('finish', onFinish)
+
+    next()
+
+    function onFinish () {
       const endTime = process.hrtime(startTime)
 
       req.log.info(
@@ -49,13 +44,6 @@ function Logger (bunyan) {
         },
         'end of the response'
       )
-    })
-
-    next()
+    }
   }
-}
-
-function uuid (hostname, pid, date, counter) {
-  return `${new Date().valueOf()}:${hostname}:` +
-    `${pid}:${date.toString(36)}:${counter}`
 }

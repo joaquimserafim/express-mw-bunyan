@@ -44,7 +44,7 @@ describe('express-mw-bunyan', () => {
     }
   })
 
-  describe('solo', () => {
+  describe('solo use', () => {
 
     before((done) => {
       app = express()
