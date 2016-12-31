@@ -1,6 +1,6 @@
 {
   "name": "express-mw-bunyan",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "express middleware that implements bunyan as a logger",
   "main": "index.js",
   "files": [
