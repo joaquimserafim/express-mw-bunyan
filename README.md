@@ -13,15 +13,18 @@ express middleware that implements bunyan as a logger to be used with `req.log`
 `const logger = require('express-mw-bunyan')`
 
 ```js
-app.use(
-  logger(bunyan.createLogger({name: 'api_name'})),
-  requestHeaderName = 'X-Request-ID'
+logger(
+  bunyan createLogger object[,
+  origin = default 'request'][,
+  headerName = default 'X-Request-ID']
 )
 ```
 
 for more options to configure `bunyan.createLogger` check with [bunyan](https://github.com/trentm/node-bunyan#introduction)
 
-**Note:** should use a middleware like `express-mw-correlation-id` to generate the `req.id` if not `express-mw-bunyan` will generate the `req.id` itself by using `uuid.v4`
+**Notes:**
+- should use a middleware like `express-mw-correlation-id` to generate the `req.id` if not `express-mw-bunyan` will generate the `req.id` itself by using `uuid.v4`
+- if you want to set a different `headerName` but still use the default `origin` you should pass `undefined` in the `origin` place
 
 ### example
 
@@ -43,7 +46,7 @@ const logger = require('express-mw-bunyan')
 // middlewares
 app.use(bodyParser.json())
 app.use(setRequestId())
-app.use(logger(bunyan.createLogger({name: 'test'})))
+app.use(logger(bunyan.createLogger({name: 'test'})), 'request_from_my_code')
 
 // `req.log` will be exposed with all log methods from bunyan
 
@@ -66,7 +69,7 @@ example of the initial request
   "name": "test",
   "hostname": "m-quim.local",
   "pid": 2695,
-  "origin": "request",
+  "origin": "request_from_my_code",
   "id": "825efe65-a27d-4dca-936b-e74249095fb7",// REQUEST ID
   "level": 30,
   "req": {
@@ -98,7 +101,7 @@ example of the end reponse
   "name": "test",
   "hostname": "m-quim.local",
   "pid": 2695,
-  "origin": "request",
+  "origin": "request_from_my_code",
   "id": "825efe65-a27d-4dca-936b-e74249095fb7",// REQUEST ID
   "level": 30,
   "res": {

@@ -156,3 +156,90 @@ describe('express-mw-bunyan', () => {
     })
   })
 })
+
+describe('unit test', () => {
+  let reqStubbed
+  let resStubbed
+
+  beforeEach(() => {
+    reqStubbed = {}
+
+    resStubbed = {
+      headers: {},
+      setHeader (key, val) {
+        resStubbed.headers[key] = val
+      },
+      on (key, fn) {
+        fn()
+      }
+    }
+  })
+
+  it('should throw when miss the bunyan `createLogger`', (done) => {
+
+    expect(exception).to.throw(Error)
+    done()
+
+    function exception () {
+      logger()(reqStubbed, resStubbed, () => {})
+    }
+  })
+
+  it('with the bunyan `createLogger`', (done) => {
+    let spyLogger = logger(bunyan.createLogger({name: 'test123'}))
+
+    spyLogger(reqStubbed, resStubbed, () => {
+      expect(reqStubbed.id).to.exist
+      expect(reqStubbed.log).to.be.an('object')
+      expect(reqStubbed.log.fields.id).to.exist
+      expect(reqStubbed.log.fields.pid).to.exist
+      expect(reqStubbed.log.fields.hostname).to.exist
+      expect(reqStubbed.log.fields.name).to.be.equal('test123')
+      expect(reqStubbed.log.fields.origin).to.be.equal('request')
+      expect(resStubbed.headers['X-Request-ID']).to.exist
+
+      done()
+    })
+  })
+
+  it('setting a different headerName', (done) => {
+    let spyLogger = logger(
+      bunyan.createLogger({name: 'test123'}),
+      undefined,
+      'TEST123'
+    )
+
+    spyLogger(reqStubbed, resStubbed, () => {
+      expect(reqStubbed.id).to.exist
+      expect(reqStubbed.log).to.be.an('object')
+      expect(reqStubbed.log.fields.id).to.exist
+      expect(reqStubbed.log.fields.pid).to.exist
+      expect(reqStubbed.log.fields.hostname).to.exist
+      expect(reqStubbed.log.fields.name).to.be.equal('test123')
+      expect(reqStubbed.log.fields.origin).to.be.equal('request')
+      expect(resStubbed.headers['TEST123']).to.exist
+
+      done()
+    })
+  })
+
+  it('setting a different origin', (done) => {
+    let spyLogger = logger(
+      bunyan.createLogger({name: 'test'}),
+      'FROM_MY_CODE'
+    )
+
+    spyLogger(reqStubbed, resStubbed, () => {
+      expect(reqStubbed.id).to.exist
+      expect(reqStubbed.log).to.be.an('object')
+      expect(reqStubbed.log.fields.id).to.exist
+      expect(reqStubbed.log.fields.pid).to.exist
+      expect(reqStubbed.log.fields.hostname).to.exist
+      expect(reqStubbed.log.fields.name).to.be.equal('test')
+      expect(reqStubbed.log.fields.origin).to.be.equal('FROM_MY_CODE')
+      expect(resStubbed.headers['X-Request-ID']).to.exist
+
+      done()
+    })
+  })
+})

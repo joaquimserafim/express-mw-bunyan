@@ -7,11 +7,11 @@ max-len: ["error", 80]
 'use strict'
 
 const setProp = require('set-prop-get-value')
-const uuidV4 = require('uuid.v4')
+const uuidV4  = require('uuid.v4')
 
 module.exports = Logger
 
-function Logger (bunyan, headerName = 'X-Request-ID') {
+function Logger (bunyan, origin = 'request', headerName = 'X-Request-ID') {
 
   return logRequest
 
@@ -22,7 +22,7 @@ function Logger (bunyan, headerName = 'X-Request-ID') {
 
     req.log = bunyan.child(
       {
-        origin: 'request',
+        origin: origin,
         id: req.id,
         serializers: bunyan.constructor.stdSerializers
       }
