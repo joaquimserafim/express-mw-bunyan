@@ -88,7 +88,56 @@ describe('express-mw-bunyan', () => {
           expect(captureStdout).to.be.string
           expect(JSON.parse(captureStdout).id)
             .to.be.equal(res.headers['x-request-id'])
-          expect(JSON.parse(captureStdout).payload)
+          expect(captureStderr).to.be.undefined
+          done()
+        })
+    })
+  })
+
+  describe('serializers override', () => {
+    const log = bunyan.createLogger(
+      {
+        name: 'test',
+        serializers: Object.assign(
+          bunyan.stdSerializers,
+          {
+            req: reqSerializer
+          }
+        )
+      }
+    )
+
+    function reqSerializer (req) {
+      return {
+        payload: req.body
+      }
+    }
+
+    before((done) => {
+      app = express()
+
+      app.use(bodyParser.json())
+      app.use(logger(log))
+
+      app.post('/', (req, res) => {
+        res.status(201).send()
+      })
+
+      done()
+    })
+
+    it('should be successful with body and req serializer override', (done) => {
+      request(app)
+        .post('/')
+        .send({a: 1})
+        .end((err, res) => {
+          expect(err).to.be.a('null')
+          expect(res).to.be.an('object')
+          expect(res.statusCode).to.be.equal(201)
+          expect(captureStdout).to.be.string
+          expect(JSON.parse(captureStdout).id)
+            .to.be.equal(res.headers['x-request-id'])
+          expect(JSON.parse(captureStdout).req.payload)
             .to.be.deep.equal({a: 1})
           expect(captureStderr).to.be.undefined
           done()

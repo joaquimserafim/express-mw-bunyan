@@ -28,7 +28,7 @@ function Logger (bunyan, origin = 'request', headerName = 'X-Request-ID') {
       }
     )
 
-    req.log.info({req: req, payload: req.body}, 'start of the request')
+    req.log.info({req: req}, 'start of the request')
 
     res.on('finish', onFinish)
 
