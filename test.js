@@ -69,10 +69,10 @@ describe('express-mw-bunyan', () => {
         .end((err, res) => {
           expect(err).to.be.a('null')
           expect(res).to.be.an('object')
-          expect(captureStdout).to.be.string
+          expect(captureStdout).to.be.a('string')
           expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
-          expect(captureStderr).to.be.undefined
+          expect(captureStderr).to.be.an('undefined')
           done()
         })
     })
@@ -85,10 +85,10 @@ describe('express-mw-bunyan', () => {
           expect(err).to.be.a('null')
           expect(res).to.be.an('object')
           expect(res.statusCode).to.be.equal(201)
-          expect(captureStdout).to.be.string
+          expect(captureStdout).to.be.a('string')
           expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
-          expect(captureStderr).to.be.undefined
+          expect(captureStderr).to.be.an('undefined')
           done()
         })
     })
@@ -134,12 +134,12 @@ describe('express-mw-bunyan', () => {
           expect(err).to.be.a('null')
           expect(res).to.be.an('object')
           expect(res.statusCode).to.be.equal(201)
-          expect(captureStdout).to.be.string
+          expect(captureStdout).to.be.a('string')
           expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
           expect(JSON.parse(captureStdout).req.payload)
             .to.be.deep.equal({a: 1})
-          expect(captureStderr).to.be.undefined
+          expect(captureStderr).to.be.an('undefined')
           done()
         })
     })
@@ -166,10 +166,10 @@ describe('express-mw-bunyan', () => {
         .end((err, res) => {
           expect(err).to.be.a('null')
           expect(res).to.be.an('object')
-          expect(captureStdout).to.be.string
+          expect(captureStdout).to.be.a('string')
           expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
-          expect(captureStderr).to.be.undefined
+          expect(captureStderr).to.be.an('undefined')
           done()
         })
     })
@@ -183,8 +183,7 @@ describe('express-mw-bunyan', () => {
       app.use(logger(bunyan.createLogger({name: 'test'})))
 
       app.get('/', (req, res) => {
-        expect(req.id).to.exist
-        expect(req.log).to.exist
+        expect(req.id).to.be.a('string')
         expect(req.log).to.be.an('object')
         expect(req.log.fields.name).to.be.equal('test')
         expect(req.log.level()).to.be.equal(30)
@@ -193,9 +192,9 @@ describe('express-mw-bunyan', () => {
         expect(req.log.trace).to.be.a('function')
         expect(req.log.warn).to.be.a('function')
         expect(req.log.error).to.be.a('function')
-        expect(req.log.serializers.req).to.exist
-        expect(req.log.serializers.res).to.exist
-        expect(req.log.serializers.err).to.exist
+        expect(req.log.serializers.req).to.be.a('function')
+        expect(req.log.serializers.res).to.be.a('function')
+        expect(req.log.serializers.err).to.be.a('function')
         res.send('Hello World')
       })
 
@@ -238,14 +237,14 @@ describe('unit test', () => {
     let spyLogger = logger(bunyan.createLogger({name: 'test123'}))
 
     spyLogger(reqStubbed, resStubbed, () => {
-      expect(reqStubbed.id).to.exist
+      expect(reqStubbed.id).to.be.a('string')
       expect(reqStubbed.log).to.be.an('object')
-      expect(reqStubbed.log.fields['req_id']).to.exist
-      expect(reqStubbed.log.fields.pid).to.exist
-      expect(reqStubbed.log.fields.hostname).to.exist
+      expect(reqStubbed.log.fields['req_id']).to.be.a('string')
+      expect(reqStubbed.log.fields.pid).to.be.a('number')
+      expect(reqStubbed.log.fields.hostname).to.be.a('string')
       expect(reqStubbed.log.fields.name).to.be.equal('test123')
       expect(reqStubbed.log.fields.origin).to.be.equal('request')
-      expect(resStubbed.headers['X-Request-ID']).to.exist
+      expect(resStubbed.headers['X-Request-ID']).to.be.a('string')
 
       done()
     })
@@ -259,14 +258,14 @@ describe('unit test', () => {
     )
 
     spyLogger(reqStubbed, resStubbed, () => {
-      expect(reqStubbed.id).to.exist
+      expect(reqStubbed.id).to.be.a('string')
       expect(reqStubbed.log).to.be.an('object')
-      expect(reqStubbed.log.fields['req_id']).to.exist
-      expect(reqStubbed.log.fields.pid).to.exist
-      expect(reqStubbed.log.fields.hostname).to.exist
+      expect(reqStubbed.log.fields['req_id']).to.be.a('string')
+      expect(reqStubbed.log.fields.pid).to.be.a('number')
+      expect(reqStubbed.log.fields.hostname).to.be.a('string')
       expect(reqStubbed.log.fields.name).to.be.equal('test123')
       expect(reqStubbed.log.fields.origin).to.be.equal('request')
-      expect(resStubbed.headers['TEST123']).to.exist
+      expect(resStubbed.headers['TEST123']).to.be.a('string')
 
       done()
     })
@@ -279,14 +278,14 @@ describe('unit test', () => {
     )
 
     spyLogger(reqStubbed, resStubbed, () => {
-      expect(reqStubbed.id).to.exist
+      expect(reqStubbed.id).to.be.a('string')
       expect(reqStubbed.log).to.be.an('object')
-      expect(reqStubbed.log.fields['req_id']).to.exist
-      expect(reqStubbed.log.fields.pid).to.exist
-      expect(reqStubbed.log.fields.hostname).to.exist
+      expect(reqStubbed.log.fields['req_id']).to.be.a('string')
+      expect(reqStubbed.log.fields.pid).to.be.a('number')
+      expect(reqStubbed.log.fields.hostname).to.be.a('string')
       expect(reqStubbed.log.fields.name).to.be.equal('test')
       expect(reqStubbed.log.fields.origin).to.be.equal('FROM_MY_CODE')
-      expect(resStubbed.headers['X-Request-ID']).to.exist
+      expect(resStubbed.headers['X-Request-ID']).to.be.a('string')
 
       done()
     })
