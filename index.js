@@ -23,7 +23,7 @@ function Logger (bunyan, origin = 'request', headerName = 'X-Request-ID') {
     req.log = bunyan.child(
       {
         origin: origin,
-        id: req.id,
+        'req_id': req.id,
         serializers: bunyan.constructor.stdSerializers
       }
     )

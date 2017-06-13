@@ -70,7 +70,7 @@ describe('express-mw-bunyan', () => {
           expect(err).to.be.a('null')
           expect(res).to.be.an('object')
           expect(captureStdout).to.be.string
-          expect(JSON.parse(captureStdout).id)
+          expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
           expect(captureStderr).to.be.undefined
           done()
@@ -86,7 +86,7 @@ describe('express-mw-bunyan', () => {
           expect(res).to.be.an('object')
           expect(res.statusCode).to.be.equal(201)
           expect(captureStdout).to.be.string
-          expect(JSON.parse(captureStdout).id)
+          expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
           expect(captureStderr).to.be.undefined
           done()
@@ -135,7 +135,7 @@ describe('express-mw-bunyan', () => {
           expect(res).to.be.an('object')
           expect(res.statusCode).to.be.equal(201)
           expect(captureStdout).to.be.string
-          expect(JSON.parse(captureStdout).id)
+          expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
           expect(JSON.parse(captureStdout).req.payload)
             .to.be.deep.equal({a: 1})
@@ -167,7 +167,7 @@ describe('express-mw-bunyan', () => {
           expect(err).to.be.a('null')
           expect(res).to.be.an('object')
           expect(captureStdout).to.be.string
-          expect(JSON.parse(captureStdout).id)
+          expect(JSON.parse(captureStdout)['req_id'])
             .to.be.equal(res.headers['x-request-id'])
           expect(captureStderr).to.be.undefined
           done()
@@ -240,7 +240,7 @@ describe('unit test', () => {
     spyLogger(reqStubbed, resStubbed, () => {
       expect(reqStubbed.id).to.exist
       expect(reqStubbed.log).to.be.an('object')
-      expect(reqStubbed.log.fields.id).to.exist
+      expect(reqStubbed.log.fields['req_id']).to.exist
       expect(reqStubbed.log.fields.pid).to.exist
       expect(reqStubbed.log.fields.hostname).to.exist
       expect(reqStubbed.log.fields.name).to.be.equal('test123')
@@ -261,7 +261,7 @@ describe('unit test', () => {
     spyLogger(reqStubbed, resStubbed, () => {
       expect(reqStubbed.id).to.exist
       expect(reqStubbed.log).to.be.an('object')
-      expect(reqStubbed.log.fields.id).to.exist
+      expect(reqStubbed.log.fields['req_id']).to.exist
       expect(reqStubbed.log.fields.pid).to.exist
       expect(reqStubbed.log.fields.hostname).to.exist
       expect(reqStubbed.log.fields.name).to.be.equal('test123')
@@ -281,7 +281,7 @@ describe('unit test', () => {
     spyLogger(reqStubbed, resStubbed, () => {
       expect(reqStubbed.id).to.exist
       expect(reqStubbed.log).to.be.an('object')
-      expect(reqStubbed.log.fields.id).to.exist
+      expect(reqStubbed.log.fields['req_id']).to.exist
       expect(reqStubbed.log.fields.pid).to.exist
       expect(reqStubbed.log.fields.hostname).to.exist
       expect(reqStubbed.log.fields.name).to.be.equal('test')

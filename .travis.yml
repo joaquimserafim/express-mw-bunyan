@@ -1,6 +1,7 @@
  language: node_js
  node_js:
   - 6
+  - 7
  branches:
  only:
   - master
@@ -8,3 +9,4 @@
   email:
    - joaquim.serafim@gmail.com
  script: npm test
+after_success: npm run coverage
