@@ -5,7 +5,7 @@ express middleware that implements bunyan as a logger to be used with `req.log`
 <a href="https://nodei.co/npm/express-mw-bunyan/"><img src="https://nodei.co/npm/express-mw-bunyan.png?downloads=true"></a>
 
 
-[![Build Status](https://travis-ci.org/joaquimserafim/express-mw-bunyan.svg?branch=master)](https://travis-ci.org/joaquimserafim/express-mw-bunyan)[![Coverage Status](https://coveralls.io/repos/github/joaquimserafim/express-mw-bunyant/badge.svg)](https://coveralls.io/github/joaquimserafim/express-mw-bunyan)[![ISC License](https://img.shields.io/badge/license-ISC-blue.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/LICENSE)[![NodeJS](https://img.shields.io/badge/node-6.1.x-brightgreen.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/package.json#L50)
+[![Build Status](https://travis-ci.org/joaquimserafim/express-mw-bunyan.svg?branch=master)](https://travis-ci.org/joaquimserafim/express-mw-bunyan)[![Coverage Status](https://coveralls.io/repos/github/joaquimserafim/express-mw-bunyan/badge.svg?branch=master)](https://coveralls.io/github/joaquimserafim/express-mw-bunyan?branch=master)[![ISC License](https://img.shields.io/badge/license-ISC-blue.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/LICENSE)[![NodeJS](https://img.shields.io/badge/node-6.1.x-brightgreen.svg?style=flat-square)](https://github.com/joaquimserafim/express-mw-bunyan/blob/master/package.json#L50)
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
